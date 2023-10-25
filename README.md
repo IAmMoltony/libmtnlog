@@ -15,4 +15,4 @@ Paste the header and source code of the library into your project somewhere. I r
 
 ## Platform compatibility
 
-The library has been tested and works on POSIX environments (Linux, Mac, BSD, ...). I'm not sure if this works on Windows.
+The library has been tested and works on POSIX environments (Linux, Mac, BSD, ...) and on Windows.
