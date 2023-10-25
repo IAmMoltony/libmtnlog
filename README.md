@@ -1,6 +1,6 @@
 # libmtnlog
 
-`libmtnlog` is my logging library. Originally created for [ds-craft](https://github.com/IAmMoltony/ds-craft).
+`libmtnlog` is my really simple logging library. Originally created for [ds-craft](https://github.com/IAmMoltony/ds-craft).
 
 ## Using the library
 
