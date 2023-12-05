@@ -48,3 +48,4 @@ void mtnlogMessage(const MtnLogLevel level, const char *format, ...);
 #endif
 
 #endif
+
