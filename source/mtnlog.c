@@ -87,7 +87,7 @@ void mtnlogMessage(const MtnLogLevel level, const char *format, ...)
         // print to stdout if the supplied level is greater than or equal to the current log level
         printf("[%s] ", _logLevelNames[level]);
         if (_color)
-            printf("\x1b[0m");
+            printf("\x1b[39m");
         vprintf(format, l);
         putchar('\n');
     }
