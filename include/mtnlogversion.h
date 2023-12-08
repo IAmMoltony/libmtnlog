@@ -9,6 +9,6 @@
 
 #define MTNLOG_MAJOR 1
 #define MTNLOG_MINOR 1
-#define MTNLOG_PATCH 0
+#define MTNLOG_PATCH 1
 
 #endif
