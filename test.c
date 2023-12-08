@@ -9,6 +9,7 @@ int main(void)
     mtnlogMessage(LOG_WARNING, "Warning!");
     mtnlogMessage(LOG_ERROR, "ERROR!!!");
     mtnlogSetLevel(LOG_INFO);
+    mtnlogColor(true);
     mtnlogMessage(LOG_INFO, "Color test: info");
     mtnlogMessage(LOG_ERROR, "Color test: error");
     mtnlogMessage(LOG_WARNING, "Color test: warning");

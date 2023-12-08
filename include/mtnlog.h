@@ -7,6 +7,8 @@
 #ifndef MTNLOG_H_
 #define MTNLOG_H_ 1
 
+#include <stdbool.h>
+
 /**
  * @brief Enum representing logging level
 */
@@ -27,6 +29,14 @@ extern "C" {
  * @param logFileName name of the log file
 */
 void mtnlogInit(const MtnLogLevel level, const char *logFileName);
+
+/**
+ * @brief Enable or disable color for messages
+ * @param enable enable or disable color
+ *
+ * Color is only supported for platforms that support ANSI escape sequences for colors. This will not change the log file, only console output.
+*/
+void mtnlogColor(const bool enable);
 
 /**
  * @brief Set logging level

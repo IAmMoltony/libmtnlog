@@ -6,6 +6,7 @@
 
 static MtnLogLevel _logLevel = LOG_INFO;
 static char *_logFileName = NULL;
+static bool _color = false;
 
 static const char *_logLevelNames[] = {
     "INFO",
@@ -46,6 +47,11 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName)
     fclose(f);
 }
 
+void mtnlogColor(const bool enable)
+{
+    _color = enable;
+}
+
 void mtnlogSetLevel(const MtnLogLevel level)
 {
     _logLevel = level;
@@ -60,8 +66,28 @@ void mtnlogMessage(const MtnLogLevel level, const char *format, ...)
 
     if (level >= _logLevel)
     {
+        if (_color)
+        {
+            switch (level)
+            {
+            case LOG_INFO:
+                printf("\x1b[32m");
+                break;
+            case LOG_WARNING:
+                printf("\x1b[33m");
+                break;
+            case LOG_ERROR:
+                printf("\x1b[31m");
+                break;
+            default:
+                break;
+            }
+        }
+
         // print to stdout if the supplied level is greater than or equal to the current log level
         printf("[%s] ", _logLevelNames[level]);
+        if (_color)
+            printf("\x1b[0m");
         vprintf(format, l);
         putchar('\n');
     }
