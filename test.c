@@ -13,4 +13,8 @@ int main(void)
     mtnlogMessage(LOG_INFO, "Color test: info");
     mtnlogMessage(LOG_ERROR, "Color test: error");
     mtnlogMessage(LOG_WARNING, "Color test: warning");
+    mtnlogConsoleOutput(false);
+    mtnlogMessage(LOG_INFO, "Console output has been disabled!");
+    mtnlogConsoleOutput(true);
+    mtnlogMessage(LOG_INFO, "Cosole output has been enabled!");
 }

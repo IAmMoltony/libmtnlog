@@ -39,6 +39,12 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName);
 void mtnlogColor(const bool enable);
 
 /**
+ * @brief Enable or disable outputting log messages into console (stdout)
+ * @param enable enable or disable console output
+*/
+void mtnlogConsoleOutput(const bool enable);
+
+/**
  * @brief Set logging level
  * @param level level
 */

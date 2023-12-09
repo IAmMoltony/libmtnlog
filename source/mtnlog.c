@@ -7,6 +7,7 @@
 static MtnLogLevel _logLevel = LOG_INFO;
 static char *_logFileName = NULL;
 static bool _color = false;
+static bool _outConsole = true;
 
 static const char *_logLevelNames[] = {
     "INFO",
@@ -52,6 +53,11 @@ void mtnlogColor(const bool enable)
     _color = enable;
 }
 
+void mtnlogConsoleOutput(const bool enable)
+{
+    _outConsole = enable;
+}
+
 void mtnlogSetLevel(const MtnLogLevel level)
 {
     _logLevel = level;
@@ -64,7 +70,7 @@ void mtnlogMessage(const MtnLogLevel level, const char *format, ...)
     va_start(l, format);
     va_copy(l2, l);
 
-    if (level >= _logLevel)
+    if (level >= _logLevel && _outConsole)
     {
         if (_color)
         {
