@@ -8,9 +8,9 @@ Paste the header and source code of the library into your project somewhere. I r
 
 ## Features
 
-- Logging messages
+- Logging messages into stdout
 - Three log levels: info, warning and error
-- Ability to change what log level will be printed to the user
+- Change what log level will be printed to the user
 - Logging into a file
 - Colored log messages
 
