@@ -12,6 +12,7 @@ Paste the header and source code of the library into your project somewhere. I r
 - Three log levels: info, warning and error
 - Ability to change what log level will be printed to the user
 - Logging into a file
+- Colored log messages
 
 ## Platform compatibility
 
