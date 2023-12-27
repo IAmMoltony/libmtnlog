@@ -14,6 +14,11 @@ Paste the header and source code of the library into your project somewhere. I r
 - Logging into a file
 - Colored log messages
 
+## Docs
+
+`libmtnlog` uses [Doxygen](https://doxygen.nl) for generating documentation. All you have to do is install it and run `doxygen` in the repo
+folder.
+
 ## Platform compatibility
 
 The library has been tested and works on POSIX environments (Linux, Mac, BSD, ...) and on Windows. Colored output uses ANSI escape sequences, so make sure you check if the terminal supports color before turning color on.
