@@ -2,6 +2,12 @@
  * @file mtnlog.h
  * @brief Moltony's logging library
  * @author moltony
+ *
+ * @mainpage MtnLog Documentation
+ *
+ * @ref mtnlog.h "MtnLog library documentation"
+ *
+ * @ref mtnlogversion.h "MtnLog version documentation"
 */
 
 #ifndef MTNLOG_H_
