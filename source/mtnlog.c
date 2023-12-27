@@ -2,14 +2,14 @@
 #include "mtnlogversion.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdarg.h>
 #include <time.h>
+#include <string.h>
 
 static MtnLogLevel _logLevel = LOG_INFO;
 static char *_logFileName = NULL;
 static bool _color = false;
 static bool _outConsole = true;
-static bool _outFIle = true;
+static bool _outFile = true;
 
 static const char *_logLevelNames[] = {
     "INFO",
@@ -75,9 +75,15 @@ void mtnlogSetLevel(const MtnLogLevel level)
 
 void mtnlogMessage(const MtnLogLevel level, const char *format, ...)
 {
-    va_list l;
+    va_list va;
+    va_start(va, format);
+    mtnlogVMessage(level, format, va);
+    va_end(va);
+}
+
+void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
+{
     va_list l2;
-    va_start(l, format);
     va_copy(l2, l);
 
     if (level >= _logLevel && _outConsole)
@@ -115,7 +121,6 @@ void mtnlogMessage(const MtnLogLevel level, const char *format, ...)
         {
             // print error and close the va lists
             perror(_logFileName);
-            va_end(l);
             va_end(l2);
             return;
         }
@@ -129,7 +134,32 @@ void mtnlogMessage(const MtnLogLevel level, const char *format, ...)
         fclose(f); // close the log file
     }
 
-    // close va lists
-    va_end(l);
+    // close va list
     va_end(l2);
+}
+
+void mtnlogMessageTag(const MtnLogLevel level, const char *tag, char *format, ...)
+{
+    char *tagString = (char *)malloc(sizeof(char) * (strlen(tag) + 3)); // 3 is the brackets and null terminator
+    if (!tagString)
+    {
+        perror("mtnlog: Failed to create tag string");
+        return;
+    }
+    sprintf(tagString, "[%s]", tag);
+
+    int fullMsgLen = strlen(tagString) + strlen(format) + 2;
+    char *formatString = (char *)malloc(sizeof(char) * fullMsgLen);
+    if (!formatString)
+    {
+        perror("mtnlog: Failed to create format string");
+        return;
+    }
+    sprintf(formatString, "%s %s", tagString, format);
+    free(tagString);
+
+    va_list va;
+    va_start(va, format);
+    mtnlogVMessage(level, formatString, va);
+    va_end(va);
 }

@@ -14,6 +14,7 @@
 #define MTNLOG_H_ 1
 
 #include <stdbool.h>
+#include <stdarg.h>
 
 /**
  * @brief Enum representing logging level
@@ -72,6 +73,24 @@ void mtnlogSetLevel(const MtnLogLevel level);
  * Used the same way as `printf`.
 */
 void mtnlogMessage(const MtnLogLevel level, const char *format, ...);
+
+/**
+ * @brief Print a message to the log (VA list version)
+ * @param level level of the message
+ * @param format formatting string
+ * @param l VA list to be used
+ * @see mtnlogMessage
+ */
+void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l);
+
+/**
+ * @brief Print a message to the log with a tag
+ * @param level level of the message
+ * @param tag message tag
+ * @param format formatting string
+ * @see mtnlogMessage
+ */
+void mtnlogMessageTag(const MtnLogLevel level, const char *tag, char *format, ...);
 
 #ifdef __cplusplus
 }

@@ -16,4 +16,5 @@ int main(void)
     mtnlogMessage(LOG_INFO, "Console output has been disabled!");
     mtnlogConsoleOutput(true);
     mtnlogMessage(LOG_INFO, "Cosole output has been enabled!");
+    mtnlogMessageTag(LOG_INFO, "THIS IS A TAG", "Message with tag");
 }
