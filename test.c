@@ -3,6 +3,7 @@
 
 static void _someFunction(void)
 {
+    // context logging text in another function
     mtnlogMessageC(LOG_INFO, "Message with context in another function");
     mtnlogMessageC(LOG_INFO, "Ctx message formatting test: %x", 0xdeadbeef);
 }
