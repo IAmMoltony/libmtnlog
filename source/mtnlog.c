@@ -9,6 +9,7 @@ static MtnLogLevel _logLevel = LOG_INFO;
 static char *_logFileName = NULL;
 static bool _color = false;
 static bool _outConsole = true;
+static bool _outFIle = true;
 
 static const char *_logLevelNames[] = {
     "INFO",
@@ -41,10 +42,13 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName)
         return;
     }
 
-    // print that log started
-    char *rnTime = _getTimeString();
-    fprintf(f, " *** MtnLog version %d.%d.%d: started log at %s\n", MTNLOG_MAJOR, MTNLOG_MINOR, MTNLOG_PATCH, rnTime);
-    free(rnTime);
+    if (_outFile)
+    {
+        // print that log started
+        char *rnTime = _getTimeString();
+        fprintf(f, " *** MtnLog version %d.%d.%d: started log at %s\n", MTNLOG_MAJOR, MTNLOG_MINOR, MTNLOG_PATCH, rnTime);
+        free(rnTime);
+    }
 
     fclose(f);
 }
@@ -57,6 +61,11 @@ void mtnlogColor(const bool enable)
 void mtnlogConsoleOutput(const bool enable)
 {
     _outConsole = enable;
+}
+
+void mtnlogFileOutput(const bool enable)
+{
+    _outFile = enable;
 }
 
 void mtnlogSetLevel(const MtnLogLevel level)
@@ -99,23 +108,26 @@ void mtnlogMessage(const MtnLogLevel level, const char *format, ...)
         putchar('\n');
     }
 
-    FILE *f = fopen(_logFileName, "a"); // open the log file in append mode
-    if (!f)
+    if (_outFile)
     {
-        // print error and close the va lists
-        perror(_logFileName);
-        va_end(l);
-        va_end(l2);
-        return;
+        FILE *f = fopen(_logFileName, "a"); // open the log file in append mode
+        if (!f)
+        {
+            // print error and close the va lists
+            perror(_logFileName);
+            va_end(l);
+            va_end(l2);
+            return;
+        }
+
+        char *rnTime = _getTimeString(); // get current time and date as a string
+        fprintf(f, "[%s] %s ", _logLevelNames[level], rnTime); // print log level and current time and date into log
+        free(rnTime); // free the time and date string
+        vfprintf(f, format, l2); // print the message into file
+        fputc('\n', f); // add a newline
+
+        fclose(f); // close the log file
     }
-
-	char *rnTime = _getTimeString(); // get current time and date as a string
-    fprintf(f, "[%s] %s ", _logLevelNames[level], rnTime); // print log level and current time and date into log
-    free(rnTime); // free the time and date string
-    vfprintf(f, format, l2); // print the message into file
-    fputc('\n', f); // add a newline
-
-    fclose(f); // close the log file
 
     // close va lists
     va_end(l);

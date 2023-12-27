@@ -51,6 +51,14 @@ void mtnlogColor(const bool enable);
 void mtnlogConsoleOutput(const bool enable);
 
 /**
+ * @brief Enable or disable outputting log messages into the log file
+ * @param enable Enable ot disable file output
+ *
+ * This can be useful if you're working in an environment without a file system.
+ */
+void mtnlogFileOutput(const bool enable);
+
+/**
  * @brief Set logging level
  * @param level level
 */
