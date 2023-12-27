@@ -26,6 +26,8 @@ typedef enum
     LOG_ERROR = 2, /**< Error: We are in trouble! */
 } MtnLogLevel;
 
+#define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE__, __func__, level, __VA_ARGS__)
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -91,6 +93,13 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l);
  * @see mtnlogMessage
  */
 void mtnlogMessageTag(const MtnLogLevel level, const char *tag, char *format, ...);
+
+/**
+ * @brief Internal function for mtnlogMessageC
+ * @note Please use mtnlogMessageC instead of putting the context yourself.
+ * @see mtnlogMessageC
+ */
+void mtnlogMessageCInternal(const int line, const char *file, const char *function, const MtnLogLevel level, const char *message, ...);
 
 #ifdef __cplusplus
 }
