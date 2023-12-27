@@ -42,7 +42,7 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName)
 
     // print that log started
     char *rnTime = _getTimeString();
-    fprintf(f, " *** Log Started %s\n", rnTime);
+    fprintf(f, " *** MtnLog version %d.%d.%d: started log at %s\n", MTNLOG_MAJOR, MTNLOG_MINOR, MTNLOG_PATCH, rnTime);
     free(rnTime);
 
     fclose(f);
