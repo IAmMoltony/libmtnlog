@@ -8,7 +8,7 @@
 #define MTNLOGVERSION_H_ 1
 
 #define MTNLOG_MAJOR 1
-#define MTNLOG_MINOR 3
+#define MTNLOG_MINOR 4
 #define MTNLOG_PATCH 0
 
 #endif
