@@ -4,7 +4,6 @@
 int main(void)
 {
     mtnlogInit(LOG_WARNING, "test.log");
-    mtnlogMessage(LOG_INFO, "Hi world, I'm using MtnLog version %d.%d.%d!", MTNLOG_MAJOR, MTNLOG_MINOR, MTNLOG_PATCH);
     mtnlogMessage(LOG_INFO, "Information");
     mtnlogMessage(LOG_WARNING, "Warning!");
     mtnlogMessage(LOG_ERROR, "ERROR!!!");
