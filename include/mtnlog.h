@@ -92,7 +92,7 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l);
  * @param format formatting string
  * @see mtnlogMessage
  */
-void mtnlogMessageTag(const MtnLogLevel level, const char *tag, char *format, ...);
+void mtnlogMessageTag(const MtnLogLevel level, const char *tag, const char *format, ...);
 
 /**
  * @brief Internal function for mtnlogMessageC

@@ -138,7 +138,7 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
     va_end(l2);
 }
 
-void mtnlogMessageTag(const MtnLogLevel level, const char *tag, char *format, ...)
+void mtnlogMessageTag(const MtnLogLevel level, const char *tag, const char *format, ...)
 {
     char *tagString = (char *)malloc(sizeof(char) * (strlen(tag) + 3)); // 3 is the brackets and null terminator
     if (!tagString)
