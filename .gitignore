@@ -3,3 +3,5 @@ test.log
 test.exe
 test
 docs/
+mtnlog.cppcheck
+mtnlog-cppcheck-build-dir
