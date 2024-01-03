@@ -153,6 +153,7 @@ void mtnlogMessageTag(const MtnLogLevel level, const char *tag, const char *form
     if (!formatString)
     {
         perror("mtnlog: Failed to create format string");
+        free(tagString);
         return;
     }
     sprintf(formatString, "%s %s", tagString, format);
@@ -183,6 +184,7 @@ void mtnlogMessageCInternal(const int line, const char *file, const char *functi
     if (!messageString)
     {
         perror("mtnlog: Failed to create message string");
+        free(ctxString);
         return;
     }
     sprintf(messageString, "%s %s", ctxString, message);
