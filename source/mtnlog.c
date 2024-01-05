@@ -13,7 +13,7 @@ static bool _outFile = true;
 
 static const char *_logLevelNames[] = {
     "INFO",
-    "WARNING",
+    "WARN",
     "ERROR",
 };
 
