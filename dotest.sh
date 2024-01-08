@@ -2,7 +2,7 @@
 
 function DoTestGCC() {
     echo "Doing test using GCC"
-    gcc test.c source/mtnlog.c -iquote include -o test && ./test
+    gcc test.c source/mtnlog.c -iquote include -o test -std=gnu89 && ./test
 }
 
 function DoTestClang() {

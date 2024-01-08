@@ -54,7 +54,7 @@ static const char *_logLevelNames[] = {
 
 static char *_getTimeString(void)
 {
-    // idk what this does
+    /* idk what this does */
 
     char *rnTime = malloc(28 * sizeof(char));
     struct tm *tminfo;
@@ -66,10 +66,10 @@ static char *_getTimeString(void)
 
 void mtnlogInit(const MtnLogLevel level, const char *logFileName)
 {
-    mtnlogSetLevel(level); // set log level
-    _logFileName = (char *)logFileName; // set log file name
+    mtnlogSetLevel(level); /* set log level */
+    _logFileName = (char *)logFileName; /* set log file name */
 
-    // open the log file
+    /* open the log file */
     FILE *f = fopen(_logFileName, "w");
     if (!f)
     {
@@ -79,7 +79,7 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName)
 
     if (_outFile)
     {
-        // print that log started
+        /* print that log started */
         char *rnTime = _getTimeString();
         fprintf(f, " *** MtnLog version %d.%d.%d: started log at %s\n", MTNLOG_MAJOR, MTNLOG_MINOR, MTNLOG_PATCH, rnTime);
         free(rnTime);
@@ -150,7 +150,7 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
         }
 #endif
 
-        // print to stdout if the supplied level is greater than or equal to the current log level
+        /* print to stdout if the supplied level is greater than or equal to the current log level */
         printf("[%s] ", _logLevelNames[level]);
 #ifdef WIN32
         if (_color)
@@ -165,31 +165,31 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
 
     if (_outFile)
     {
-        FILE *f = fopen(_logFileName, "a"); // open the log file in append mode
+        FILE *f = fopen(_logFileName, "a"); /* open the log file in append mode */
         if (!f)
         {
-            // print error and close the va lists
+            /* print error and close the va lists */
             perror(_logFileName);
             va_end(l2);
             return;
         }
 
-        char *rnTime = _getTimeString(); // get current time and date as a string
-        fprintf(f, "[%s] %s ", _logLevelNames[level], rnTime); // print log level and current time and date into log
-        free(rnTime); // free the time and date string
-        vfprintf(f, format, l2); // print the message into file
-        fputc('\n', f); // add a newline
+        char *rnTime = _getTimeString(); /* get current time and date as a string */
+        fprintf(f, "[%s] %s ", _logLevelNames[level], rnTime); /* print log level and current time and date into log */
+        free(rnTime); /* free the time and date string */
+        vfprintf(f, format, l2); /* print the message into file */
+        fputc('\n', f); /* add a newline */
 
-        fclose(f); // close the log file
+        fclose(f); /* close the log file */
     }
 
-    // close va list
+    /* close va list */
     va_end(l2);
 }
 
 void mtnlogMessageTag(const MtnLogLevel level, const char *tag, const char *format, ...)
 {
-    char *tagString = (char *)malloc(sizeof(char) * (strlen(tag) + 3)); // 3 is the brackets and null terminator
+    char *tagString = (char *)malloc(sizeof(char) * (strlen(tag) + 3)); /* 3 is the brackets and null terminator */
     if (!tagString)
     {
         perror("mtnlog: Failed to create tag string");
