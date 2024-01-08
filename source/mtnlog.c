@@ -5,6 +5,41 @@
 #include <time.h>
 #include <string.h>
 
+#ifdef WIN32
+// Windows specific code
+#include <windows.h>
+
+static WORD _winOriginalConsoleAttrs;
+
+static void _winGetOriginalAttrs(void)
+{
+    CONSOLE_SCREEN_BUFFER_INFO ci;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &ci);
+    _winOriginalConsoleAttrs = ci.wAttributes;
+}
+
+static void _winSetConsoleColor(MtnLogLevel l)
+{
+    switch (l)
+    {
+    case LOG_INFO:
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+        break;
+    case LOG_WARNING:
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN);
+        break;
+    case LOG_ERROR:
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+        break;
+    }
+}
+
+static void _winResetConsoleColor(void)
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), _winOriginalConsoleAttrs);
+}
+#endif
+
 static MtnLogLevel _logLevel = LOG_INFO;
 static char *_logFileName = NULL;
 static bool _color = false;
@@ -50,6 +85,10 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName)
         free(rnTime);
     }
 
+#ifdef WIN32
+    _winGetOriginalAttrs();
+#endif
+
     fclose(f);
 }
 
@@ -88,6 +127,10 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
 
     if (level >= _logLevel && _outConsole)
     {
+#ifdef WIN32
+        if (_color)
+            _winSetConsoleColor(level);
+#else
         if (_color)
         {
             switch (level)
@@ -105,11 +148,17 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
                 break;
             }
         }
+#endif
 
         // print to stdout if the supplied level is greater than or equal to the current log level
         printf("[%s] ", _logLevelNames[level]);
+#ifdef WIN32
+        if (_color)
+            _winResetConsoleColor();
+#else
         if (_color)
             printf("\x1b[39m");
+#endif
         vprintf(format, l);
         putchar('\n');
     }

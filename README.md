@@ -23,6 +23,8 @@ folder.
 
 The library has been tested and works on POSIX environments (Linux, Mac, BSD, ...) and on Windows. Colored output uses ANSI escape sequences, so make sure you check if the terminal supports color before turning color on.
 
+On Windows, `libmtnlog` uses the Windows API for colored output.
+
 ## Compiler compatibility
 
 The library is known to work on the following compilers:

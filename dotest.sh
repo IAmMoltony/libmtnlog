@@ -17,12 +17,12 @@ function DoTestTCC() {
 
 function DoTestMinGW32() {
     echo "Doing test using 32-bit MinGW"
-    i686-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -o test && wine test.exe
+    i686-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -o test && wine test.exe
 }
 
 function DoTestMinGW64() {
     echo "Doing test using 64-bit MinGW"
-    x86_64-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -o test && wine64 test.exe
+    x86_64-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -o test && wine64 test.exe
 }
 
 function DoTestAll() {
