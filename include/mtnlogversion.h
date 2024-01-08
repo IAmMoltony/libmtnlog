@@ -10,12 +10,12 @@
 /**
  * @brief Major MtnLog version
  */
-#define MTNLOG_MAJOR 1
+#define MTNLOG_MAJOR 2
 
 /**
  * @brief Minor MtnLog version
  */
-#define MTNLOG_MINOR 5
+#define MTNLOG_MINOR 0
 
 /**
  * @brief MtnLog patch

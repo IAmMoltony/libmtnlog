@@ -22,13 +22,13 @@ static void _winSetConsoleColor(MtnLogLevel l)
 {
     switch (l)
     {
-    case LOG_INFO:
+    case MTNLOG_INFO:
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
         break;
-    case LOG_WARNING:
+    case MTNLOG_WARNING:
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN);
         break;
-    case LOG_ERROR:
+    case MTNLOG_ERROR:
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
         break;
     }
@@ -40,7 +40,7 @@ static void _winResetConsoleColor(void)
 }
 #endif
 
-static MtnLogLevel _logLevel = LOG_INFO;
+static MtnLogLevel _logLevel = MTNLOG_INFO;
 static char *_logFileName = NULL;
 static bool _color = false;
 static bool _outConsole = true;
@@ -135,13 +135,13 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
         {
             switch (level)
             {
-            case LOG_INFO:
+            case MTNLOG_INFO:
                 printf("\x1b[32m");
                 break;
-            case LOG_WARNING:
+            case MTNLOG_WARNING:
                 printf("\x1b[33m");
                 break;
-            case LOG_ERROR:
+            case MTNLOG_ERROR:
                 printf("\x1b[31m");
                 break;
             default:

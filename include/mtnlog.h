@@ -21,9 +21,9 @@
 */
 typedef enum
 {
-    LOG_INFO = 0, /**< Information: Status or progress of the program */
-    LOG_WARNING = 1, /**< Warning: Something is a bit off, but we can still continue */
-    LOG_ERROR = 2, /**< Error: We are in trouble! */
+    MTNLOG_INFO = 0, /**< Information: Status or progress of the program */
+    MTNLOG_WARNING = 1, /**< Warning: Something is a bit off, but we can still continue */
+    MTNLOG_ERROR = 2, /**< Error: We are in trouble! */
 } MtnLogLevel;
 
 #define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE__, __func__, level, __VA_ARGS__)
