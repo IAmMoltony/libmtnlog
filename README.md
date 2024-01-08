@@ -30,6 +30,7 @@ The library is known to work on the following compilers:
 - GCC
 - Clang
 - TCC (TinyCC)
+- MinGW (i686 and x86_64)
 
 ## TODO
 

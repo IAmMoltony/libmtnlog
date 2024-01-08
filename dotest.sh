@@ -15,11 +15,23 @@ function DoTestTCC() {
     tcc test.c source/mtnlog.c -Iinclude -o test && ./test
 }
 
+function DoTestMinGW32() {
+    echo "Doing test using 32-bit MinGW"
+    i686-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -o test && wine test.exe
+}
+
+function DoTestMinGW64() {
+    echo "Doing test using 64-bit MinGW"
+    x86_64-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -o test && wine64 test.exe
+}
+
 function DoTestAll() {
     echo "Doing test using every compiler"
     DoTestGCC
     DoTestClang
     DoTestTCC
+    DoTestMinGW32
+    DoTestMinGW64
 }
 
 if [ "$1" == "" ]; then
@@ -32,6 +44,13 @@ elif [ "$1" == "tcc" ]; then
     DoTestTCC
 elif [ "$1" == "tinycc" ]; then
     DoTestTCC
+elif [ "$1" == "mingw" ]; then
+    DoTestMinGW32
+    DoTestMinGW64
+elif [ "$1" == "mingw32" ]; then
+    DoTestMinGW32
+elif [ "$1" == "mingw64" ]; then
+    DoTestMinGW64
 elif [ "$1" == "all" ]; then
     DoTestAll
 else
