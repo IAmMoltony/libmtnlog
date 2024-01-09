@@ -34,6 +34,5 @@ The library is known to work on the following compilers:
 - TCC (TinyCC)
 - MinGW (i686 and x86_64)
 
-## TODO
+**Note:** MSVC (Visual C++) *might* work but I couldn't get it working on Wine and couldn't test it. Use at your own risk.
 
-- MSVC compatibility
