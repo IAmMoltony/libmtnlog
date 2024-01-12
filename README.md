@@ -10,6 +10,8 @@ Paste the header and source code of the library into your project somewhere. I r
 
 - Logging messages into stdout
 - Three log levels: info, warning and error
+- Logging with timestamps
+- Logging with context (function, file and line)
 - Change what log level will be printed to the user
 - Logging into a file
 - Colored log messages
@@ -36,3 +38,6 @@ The library is known to work on the following compilers:
 
 **Note:** MSVC (Visual C++) *might* work but I couldn't get it working on Wine and couldn't test it. Use at your own risk.
 
+## TODO
+
+- Disabling timestamp in logs
