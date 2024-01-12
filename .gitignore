@@ -5,3 +5,4 @@ test
 docs/
 mtnlog.cppcheck
 mtnlog-cppcheck-build-dir
+doxygen-warn.log
