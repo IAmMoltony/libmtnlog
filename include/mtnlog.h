@@ -26,6 +26,11 @@ typedef enum
     MTNLOG_ERROR = 2, /**< Error: We are in trouble! */
 } MtnLogLevel;
 
+/**
+ * @brief Log message with context
+ * @param level level of the message
+ * @param ... variadic arguments including the format string
+ */
 #define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE__, __func__, level, __VA_ARGS__)
 
 #ifdef __cplusplus
