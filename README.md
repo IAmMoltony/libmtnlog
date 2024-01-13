@@ -1,5 +1,7 @@
 # libmtnlog
 
+[![CodeFactor](https://www.codefactor.io/repository/github/iammoltony/libmtnlog/badge)](https://www.codefactor.io/repository/github/iammoltony/libmtnlog)
+
 `libmtnlog` is my really simple logging library. Originally created for [ds-craft](https://github.com/IAmMoltony/ds-craft).
 
 ## Using the library
