@@ -53,6 +53,15 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName);
 void mtnlogColor(const bool enable);
 
 /**
+ * @brief Check if color is supported
+ *
+ * On Windows this always returns `true`.
+ *
+ * On non-Windows platforms this checks the `TERM` environment variable.
+ */
+bool mtnlogCheckColor(void);
+
+/**
  * @brief Enable or disable outputting log messages into console (stdout)
  * @param enable enable or disable console output
 */

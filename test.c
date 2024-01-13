@@ -19,7 +19,15 @@ int main(void)
     mtnlogMessage(MTNLOG_ERROR, "ERROR!!!");
 
     mtnlogSetLevel(MTNLOG_INFO);
-    mtnlogColor(true);
+
+    /* set color */
+    if (mtnlogCheckColor())
+        mtnlogColor(true);
+    else
+    {
+        mtnlogColor(false);
+        mtnlogMessage(MTNLOG_WARNING, "Terminal doesn't seem to support color :(");
+    }
     
     /* color test */
     mtnlogMessage(MTNLOG_INFO, "Color test: info");

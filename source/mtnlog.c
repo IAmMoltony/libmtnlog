@@ -98,6 +98,16 @@ void mtnlogColor(const bool enable)
     _color = enable;
 }
 
+bool mtnlogCheckColor(void)
+{
+#ifdef WIN32
+    return true;
+#else
+    const char *termType = getenv("TERM");
+    return (termType != NULL && (strstr(termType, "color") != NULL || strstr(termType, "xtrem") != NULL));
+#endif
+}
+
 void mtnlogConsoleOutput(const bool enable)
 {
     _outConsole = enable;
