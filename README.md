@@ -25,9 +25,11 @@ folder.
 
 ## Platform compatibility
 
-The library has been tested and works on POSIX environments (Linux, Mac, BSD, ...) and on Windows. Colored output uses ANSI escape sequences, so make sure you check if the terminal supports color before turning color on.
+The library has been tested and works on POSIX environments (Linux, Mac, BSD, ...) and on Windows.
 
-On Windows, `libmtnlog` uses the Windows API for colored output.
+On Windows, `libmtnlog` uses the Windows API for colored output. On other platforms it uses ANSI escape sequences.
+
+Before turning color on, make sure that the terminal supports color. You can use the `mtnlogCheckColor()` function for that.
 
 ## Compiler compatibility
 
