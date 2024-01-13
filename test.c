@@ -38,4 +38,10 @@ int main(void)
     /* context logging test */
     mtnlogMessageC(MTNLOG_INFO, "Message with context");
     _someFunction();
+
+    /* timestamp enable/disable test */
+    mtnlogTimestamps(false);
+    mtnlogMessage(MTNLOG_INFO, "Timestamps have been disabled");
+    mtnlogTimestamps(true);
+    mtnlogMessage(MTNLOG_INFO, "Timestamps have been enabled");
 }

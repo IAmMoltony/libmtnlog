@@ -68,6 +68,12 @@ void mtnlogFileOutput(const bool enable);
 void mtnlogSetLevel(const MtnLogLevel level);
 
 /**
+ * @brief Enable or disable log timestamps
+ * @param enable enable or disable
+ */
+void mtnlogTimestamps(const bool enable);
+
+/**
  * @brief Print a message to the log
  * @param level level of the message
  * @param format formatting string

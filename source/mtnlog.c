@@ -45,6 +45,7 @@ static char *_logFileName = NULL;
 static bool _color = false;
 static bool _outConsole = true;
 static bool _outFile = true;
+static bool _timestamp = true;
 
 static const char *_logLevelNames[] = {
     "INFO",
@@ -112,6 +113,11 @@ void mtnlogSetLevel(const MtnLogLevel level)
     _logLevel = level;
 }
 
+void mtnlogTimestamps(const bool enable)
+{
+    _timestamp = enable;
+}
+
 void mtnlogMessage(const MtnLogLevel level, const char *format, ...)
 {
     va_list va;
@@ -174,9 +180,14 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
             return;
         }
 
-        char *rnTime = _getTimeString(); /* get current time and date as a string */
-        fprintf(f, "[%s] %s ", _logLevelNames[level], rnTime); /* print log level and current time and date into log */
-        free(rnTime); /* free the time and date string */
+        if (_timestamp)
+        {
+            char *rnTime = _getTimeString(); /* get current time and date as a string */
+            fprintf(f, "[%s] %s ", _logLevelNames[level], rnTime); /* print log level and current time and date into log */
+            free(rnTime); /* free the time and date string */
+        }
+        else
+            fprintf(f, "[%s] ", _logLevelNames[level]);
         vfprintf(f, format, l2); /* print the message into file */
         fputc('\n', f); /* add a newline */
 
