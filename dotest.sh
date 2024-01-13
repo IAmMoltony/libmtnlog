@@ -55,6 +55,6 @@ elif [ "$1" == "all" ]; then
     DoTestAll
 else
     echo "Unknown compiler '$1'"
-    echo "Valid compilers are 'gcc', 'clang', 'tcc', 'tinycc', 'all'"
+    echo "Valid compilers are 'gcc', 'clang', 'tcc', 'tinycc', 'mingw', 'mingw32', 'mingw64', 'all'"
     exit 1
 fi
