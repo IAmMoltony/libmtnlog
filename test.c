@@ -3,9 +3,12 @@
 
 static void _someFunction(void)
 {
-    /* context logging text in another function */
+    /* context logging test in another function */
     mtnlogMessageC(MTNLOG_INFO, "Message with context in another function");
     mtnlogMessageC(MTNLOG_INFO, "Ctx message formatting test: %x", 0xdeadbeef);
+
+    /* context logging with tag */
+    mtnlogMessageTagC(MTNLOG_INFO, "other tag", "Message with context and tag");
 }
 
 int main(void)

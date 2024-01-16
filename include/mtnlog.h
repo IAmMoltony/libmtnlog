@@ -33,6 +33,14 @@ typedef enum
  */
 #define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE__, __func__, level, __VA_ARGS__)
 
+/**
+ * @brief Log message with tag and context
+ * @param level level of the message
+ * @param tag message tag
+ * @param ... variadic arguments including the format string
+ */
+#define mtnlogMessageTagC(level, tag, ...) mtnlogMessageTagCInternal(__LINE__, __FILE__, __func__, level, tag, __VA_ARGS__)
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -115,11 +123,28 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l);
 void mtnlogMessageTag(const MtnLogLevel level, const char *tag, const char *format, ...);
 
 /**
+ * @brief Print a message to the log with a tag (VA list version)
+ * @param level level of the message
+ * @param tag message tag
+ * @param format formatting string
+ * @param l VA list to be used
+ * @see mtnlogMessageTag
+ */
+void mtnlogVMessageTag(const MtnLogLevel level, const char *tag, const char *format, va_list l);
+
+/**
  * @brief Internal function for mtnlogMessageC
  * @note Please use mtnlogMessageC instead of putting the context yourself.
  * @see mtnlogMessageC
  */
 void mtnlogMessageCInternal(const int line, const char *file, const char *function, const MtnLogLevel level, const char *message, ...);
+
+/**
+ * @brief Internal function for mtnlogMessageTagC
+ * @note Please use mtnlogMessageTagC instead of putting the context yourself.
+ * @see mtnlogMessageTagC
+ */
+void mtnlogMessageTagCInternal(const int line, const char *file, const char *function, const MtnLogLevel level, const char *tag, const char *message, ...);
 
 #ifdef __cplusplus
 }

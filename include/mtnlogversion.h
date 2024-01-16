@@ -15,7 +15,7 @@
 /**
  * @brief Minor MtnLog version
  */
-#define MTNLOG_MINOR 2
+#define MTNLOG_MINOR 3
 
 /**
  * @brief MtnLog patch

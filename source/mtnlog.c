@@ -210,6 +210,14 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
 
 void mtnlogMessageTag(const MtnLogLevel level, const char *tag, const char *format, ...)
 {
+    va_list va;
+    va_start(va, format);
+    mtnlogVMessageTag(level, tag, format, va);
+    va_end(va);
+}
+
+void mtnlogVMessageTag(const MtnLogLevel level, const char *tag, const char *format, va_list l)
+{
     char *tagString = (char *)malloc(sizeof(char) * (strlen(tag) + 3)); /* 3 is the brackets and null terminator */
     if (!tagString)
     {
@@ -229,10 +237,7 @@ void mtnlogMessageTag(const MtnLogLevel level, const char *tag, const char *form
     sprintf(formatString, "%s %s", tagString, format);
     free(tagString);
 
-    va_list va;
-    va_start(va, format);
-    mtnlogVMessage(level, formatString, va);
-    va_end(va);
+    mtnlogVMessage(level, formatString, l);
 }
 
 void mtnlogMessageCInternal(const int line, const char *file, const char *function, const MtnLogLevel level, const char *message, ...)
@@ -263,5 +268,36 @@ void mtnlogMessageCInternal(const int line, const char *file, const char *functi
     va_list va;
     va_start(va, message);
     mtnlogVMessage(level, messageString, va);
+    va_end(va);
+}
+
+void mtnlogMessageTagCInternal(const int line, const char *file, const char *function, const MtnLogLevel level, const char *tag, const char *message, ...)
+{
+    char lineNumString[12];
+    snprintf(lineNumString, 12, "%d", line);
+
+    int ctxStringLen = strlen(file) + 1 + strlen(lineNumString) + 1 + strlen(function) + 3;
+    char *ctxString = malloc(sizeof(char) * ctxStringLen);
+    if (!ctxString)
+    {
+        perror("mtnlog: Failed to create context string");
+        return;
+    }
+    sprintf(ctxString, "%s:%s %s()", file, lineNumString, function);
+    
+    int messageLen = strlen(message) + 1 + strlen(ctxString) + 1;
+    char *messageString = malloc(sizeof(char) * messageLen);
+    if (!messageString)
+    {
+        perror("mtnlog: Failed to create message string");
+        free(ctxString);
+        return;
+    }
+    sprintf(messageString, "%s %s", ctxString, message);
+    free(ctxString);
+    
+    va_list va;
+    va_start(va, message);
+    mtnlogVMessageTag(level, tag, messageString, va);
     va_end(va);
 }
