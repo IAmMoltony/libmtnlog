@@ -240,7 +240,9 @@ void mtnlogVMessageTag(const MtnLogLevel level, const char *tag, const char *for
     mtnlogVMessage(level, formatString, l);
 }
 
-void mtnlogMessageCInternal(const int line, const char *file, const char *function, const MtnLogLevel level, const char *message, ...)
+static char *_ctxMessageString = NULL;
+
+static void _mtnlogCreateLogContext(const int line, const char *file, const char *function, const char *message)
 {
     char lineNumString[12];
     snprintf(lineNumString, 12, "%d", line);
@@ -255,49 +257,31 @@ void mtnlogMessageCInternal(const int line, const char *file, const char *functi
     sprintf(ctxString, "%s:%s %s()", file, lineNumString, function);
     
     int messageLen = strlen(message) + 1 + strlen(ctxString) + 1;
-    char *messageString = malloc(sizeof(char) * messageLen);
-    if (!messageString)
+    _ctxMessageString = malloc(sizeof(char) * messageLen);
+    if (!_ctxMessageString)
     {
         perror("mtnlog: Failed to create message string");
         free(ctxString);
         return;
     }
-    sprintf(messageString, "%s %s", ctxString, message);
+    sprintf(_ctxMessageString, "%s %s", ctxString, message);
     free(ctxString);
-    
+}
+
+void mtnlogMessageCInternal(const int line, const char *file, const char *function, const MtnLogLevel level, const char *message, ...)
+{
+    _mtnlogCreateLogContext(line, file, function, message);
     va_list va;
     va_start(va, message);
-    mtnlogVMessage(level, messageString, va);
+    mtnlogVMessage(level, _ctxMessageString, va);
     va_end(va);
 }
 
 void mtnlogMessageTagCInternal(const int line, const char *file, const char *function, const MtnLogLevel level, const char *tag, const char *message, ...)
 {
-    char lineNumString[12];
-    snprintf(lineNumString, 12, "%d", line);
-
-    int ctxStringLen = strlen(file) + 1 + strlen(lineNumString) + 1 + strlen(function) + 3;
-    char *ctxString = malloc(sizeof(char) * ctxStringLen);
-    if (!ctxString)
-    {
-        perror("mtnlog: Failed to create context string");
-        return;
-    }
-    sprintf(ctxString, "%s:%s %s()", file, lineNumString, function);
-    
-    int messageLen = strlen(message) + 1 + strlen(ctxString) + 1;
-    char *messageString = malloc(sizeof(char) * messageLen);
-    if (!messageString)
-    {
-        perror("mtnlog: Failed to create message string");
-        free(ctxString);
-        return;
-    }
-    sprintf(messageString, "%s %s", ctxString, message);
-    free(ctxString);
-    
+    _mtnlogCreateLogContext(line, file, function, message);
     va_list va;
     va_start(va, message);
-    mtnlogVMessageTag(level, tag, messageString, va);
+    mtnlogVMessageTag(level, tag, _ctxMessageString, va);
     va_end(va);
 }
