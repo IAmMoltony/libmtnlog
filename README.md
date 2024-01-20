@@ -42,8 +42,13 @@ All you have to do is install it and run `doxygen` in the repo folder.
 
 ## Platform compatibility
 
-The library has been tested and works on POSIX environments (Linux, Mac, BSD,
-...) and on Windows.
+The library was tested on the following platforms:
+
+- Linux
+- Windows
+- Nintendo DS
+
+However, it should work with other POSIX-compatible OSes.
 
 On Windows, `libmtnlog` uses the Windows API for colored output. On other
 platforms it uses ANSI escape sequences.
