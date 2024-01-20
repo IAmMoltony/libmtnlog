@@ -96,6 +96,12 @@ void mtnlogSetLevel(const MtnLogLevel level);
 void mtnlogTimestamps(const bool enable);
 
 /**
+ * @brief Enable or disable putting timestamps in console
+ * @param enable enable or disable
+ */
+void mtnlogConsoleTimestamps(const bool enable);
+
+/**
  * @brief Print a message to the log
  * @param level level of the message
  * @param format formatting string

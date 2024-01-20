@@ -56,5 +56,10 @@ int main(void)
     mtnlogTimestamps(true);
     mtnlogMessage(MTNLOG_INFO, "Timestamps have been enabled");
 
+    /* timestamp in console enable/disable test */
+    mtnlogConsoleTimestamps(true);
+    mtnlogMessage(MTNLOG_INFO, "Console timestamp test");
+    mtnlogConsoleTimestamps(false);
+
     return 0;
 }

@@ -46,6 +46,7 @@ static bool _color = false;
 static bool _outConsole = true;
 static bool _outFile = true;
 static bool _timestamp = true;
+static bool _timestampConsole = false;
 
 static const char *_logLevelNames[] = {
     "INFO",
@@ -55,8 +56,6 @@ static const char *_logLevelNames[] = {
 
 static char *_getTimeString(void)
 {
-    /* idk what this does */
-
     char *rnTime = malloc(28 * sizeof(char));
     struct tm *tminfo;
     time_t tmr = time(NULL);
@@ -128,6 +127,11 @@ void mtnlogTimestamps(const bool enable)
     _timestamp = enable;
 }
 
+void mtnlogConsoleTimestamps(const bool enable)
+{
+    _timestampConsole = enable;
+}
+
 void mtnlogMessage(const MtnLogLevel level, const char *format, ...)
 {
     va_list va;
@@ -138,6 +142,10 @@ void mtnlogMessage(const MtnLogLevel level, const char *format, ...)
 
 void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
 {
+    char *rnTime = NULL;
+    if (_timestamp)
+        rnTime = _getTimeString(); /* get current time and date as a string */
+
     va_list l2;
     va_copy(l2, l);
 
@@ -175,6 +183,8 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
         if (_color)
             printf("\x1b[39m");
 #endif
+        if (rnTime && _timestampConsole)
+            printf("%s ", rnTime);
         vprintf(format, l);
         putchar('\n');
     }
@@ -190,12 +200,8 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
             return;
         }
 
-        if (_timestamp)
-        {
-            char *rnTime = _getTimeString(); /* get current time and date as a string */
-            fprintf(f, "[%s] %s ", _logLevelNames[level], rnTime); /* print log level and current time and date into log */
-            free(rnTime); /* free the time and date string */
-        }
+        if (rnTime)
+            fprintf(f, "[%s] %s ", _logLevelNames[level], rnTime);
         else
             fprintf(f, "[%s] ", _logLevelNames[level]);
         vfprintf(f, format, l2); /* print the message into file */
@@ -206,6 +212,9 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
 
     /* close va list */
     va_end(l2);
+
+    /* free date time string */
+    free(rnTime);
 }
 
 void mtnlogMessageTag(const MtnLogLevel level, const char *tag, const char *format, ...)
