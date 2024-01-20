@@ -39,7 +39,7 @@ typedef enum
  * @param tag message tag
  * @param ... variadic arguments including the format string
  */
-#define mtnlogMessageTagC(level, tag, ...) mtnlogMessageTagCInternal(__LINE__, __FILE__, __func__, level, tag, __VA_ARGS__)
+#define mtnlogMessageTagC(level, tag, ...) mtnlogMessageTagCInternal(__LINE__, __FILE__, __func__, (level), (tag), __VA_ARGS__)
 
 #ifdef __cplusplus
 extern "C" {
