@@ -55,4 +55,6 @@ int main(void)
     mtnlogMessage(MTNLOG_INFO, "Timestamps have been disabled");
     mtnlogTimestamps(true);
     mtnlogMessage(MTNLOG_INFO, "Timestamps have been enabled");
+
+    return 0;
 }
