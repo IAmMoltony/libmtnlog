@@ -18,6 +18,20 @@ Paste the header and source code of the library into your project somewhere. I r
 - Logging into a file
 - Colored log messages
 
+## Testing
+
+Instead of using fancy testing toolkits, there is instead a program that utilises every feature of the library
+and it is checked whether the output looks right.
+
+### Running tests
+
+Tests can be run using the `dotest.sh` script:
+
+`./dotest.sh`
+
+By default the script tests using GCC, but it also supports other compilers. To see the whole list, you can bring up
+help: `./dotest.sh help`
+
 ## Docs
 
 `libmtnlog` uses [Doxygen](https://doxygen.nl) for generating documentation. All you have to do is install it and run `doxygen` in the repo

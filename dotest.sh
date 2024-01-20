@@ -34,6 +34,13 @@ DoTestAll() {
     DoTestMinGW64
 }
 
+PrintHelp() {
+    echo "Usage: $0 <compiler>"
+    echo "       $0 help"
+    echo "Valid compilers are 'gcc', 'clang', 'tcc', 'tinycc', 'mingw', 'mingw32', 'mingw64', 'all'"
+    echo "'all' tests using all compilers"
+}
+
 if [ "$1" == "" ]; then
     DoTestGCC
 elif [ "$1" == "gcc" ]; then
@@ -53,8 +60,10 @@ elif [ "$1" == "mingw64" ]; then
     DoTestMinGW64
 elif [ "$1" == "all" ]; then
     DoTestAll
+elif [ "$1" == "help" ]; then
+    PrintHelp
 else
     echo "Unknown compiler '$1'"
-    echo "Valid compilers are 'gcc', 'clang', 'tcc', 'tinycc', 'mingw', 'mingw32', 'mingw64', 'all'"
+    PrintHelp
     exit 1
 fi
