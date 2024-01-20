@@ -47,6 +47,7 @@ The library was tested on the following platforms:
 - Linux
 - Windows
 - Nintendo DS
+- Haiku
 
 However, it should work with other POSIX-compatible OSes.
 
