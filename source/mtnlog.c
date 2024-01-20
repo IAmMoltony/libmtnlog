@@ -69,20 +69,23 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName)
     mtnlogSetLevel(level); /* set log level */
     _logFileName = (char *)logFileName; /* set log file name */
 
-    /* open the log file */
-    FILE *f = fopen(_logFileName, "w");
-    if (!f)
-    {
-        perror(_logFileName);
-        return;
-    }
-
     if (_outFile)
     {
-        /* print that log started */
-        char *rnTime = _getTimeString();
-        fprintf(f, " *** MtnLog version %d.%d.%d: started log at %s\n", MTNLOG_MAJOR, MTNLOG_MINOR, MTNLOG_PATCH, rnTime);
-        free(rnTime);
+        /* open the log file */
+        FILE *f = fopen(_logFileName, "w");
+        if (!f)
+        {
+            perror(_logFileName);
+            return;
+        }
+
+        if (_outFile)
+        {
+            /* print that log started */
+            char *rnTime = _getTimeString();
+            fprintf(f, " *** MtnLog version %d.%d.%d: started log at %s\n", MTNLOG_MAJOR, MTNLOG_MINOR, MTNLOG_PATCH, rnTime);
+            free(rnTime);
+        }
     }
 
 #ifdef WIN32
