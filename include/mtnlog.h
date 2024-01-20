@@ -31,7 +31,7 @@ typedef enum
  * @param level level of the message
  * @param ... variadic arguments including the format string
  */
-#define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE__, __func__, level, __VA_ARGS__)
+#define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE__, __func__, (level), __VA_ARGS__)
 
 /**
  * @brief Log message with tag and context
