@@ -86,13 +86,13 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName)
             fprintf(f, " *** MtnLog version %d.%d.%d: started log at %s\n", MTNLOG_MAJOR, MTNLOG_MINOR, MTNLOG_PATCH, rnTime);
             free(rnTime);
         }
+
+        fclose(f);
     }
 
 #ifdef WIN32
     _winGetOriginalAttrs();
 #endif
-
-    fclose(f);
 }
 
 void mtnlogColor(const bool enable)
