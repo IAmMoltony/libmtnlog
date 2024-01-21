@@ -35,6 +35,9 @@ Tests can be run using the `dotest.sh` script:
 By default the script tests using GCC, but it also supports other compilers. To
 see the whole list, you can bring up help: `./dotest.sh help`
 
+Please note that you need `bash` installed on your machine for the script
+to work.
+
 ## Docs
 
 `libmtnlog` uses [Doxygen](https://doxygen.nl) for generating documentation.
