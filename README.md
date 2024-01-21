@@ -45,9 +45,10 @@ All you have to do is install it and run `doxygen` in the repo folder.
 The library was tested on the following platforms:
 
 - Linux
-- Windows
+- Windows (with Wine)
 - Nintendo DS
 - Haiku
+- BSD (tested on NetBSD)
 
 However, it should work with other POSIX-compatible OSes.
 
