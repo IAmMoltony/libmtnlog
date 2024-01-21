@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 DoTestGCC() {
     echo "Doing test using GCC"
