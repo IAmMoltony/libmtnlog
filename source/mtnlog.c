@@ -106,7 +106,7 @@ bool mtnlogCheckColor(void)
     return true;
 #else
     const char *termType = getenv("TERM");
-    return (termType != NULL && (strstr(termType, "color") != NULL || strstr(termType, "xtrem") != NULL));
+    return (termType != NULL && (strstr(termType, "color") != NULL || strstr(termType, "xterm") != NULL || strstr(termType, "wsvt25") != NULL));
 #endif
 }
 
