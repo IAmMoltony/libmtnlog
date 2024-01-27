@@ -2,27 +2,27 @@
 
 DoTestGCC() {
     echo "Doing test using GCC"
-    gcc test.c source/mtnlog.c -iquote include -o test -std=gnu89 -Wall -Wextra && ./test
+    gcc test.c source/mtnlog.c -iquote include -g -o test -std=gnu89 -Wall -Wextra && ./test
 }
 
 DoTestClang() {
     echo "Doing test using Clang"
-    clang test.c source/mtnlog.c -iquote include -o test && ./test
+    clang test.c source/mtnlog.c -iquote include -g -o test && ./test
 }
 
 DoTestTCC() {
     echo "Doing test using TinyCC"
-    tcc test.c source/mtnlog.c -Iinclude -o test && ./test
+    tcc test.c source/mtnlog.c -Iinclude -g -o test && ./test
 }
 
 DoTestMinGW32() {
     echo "Doing test using 32-bit MinGW"
-    i686-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -o test && wine test.exe
+    i686-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -g -o test && wine test.exe
 }
 
 DoTestMinGW64() {
     echo "Doing test using 64-bit MinGW"
-    x86_64-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -o test && wine64 test.exe
+    x86_64-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -g -o test && wine64 test.exe
 }
 
 DoTestAll() {
