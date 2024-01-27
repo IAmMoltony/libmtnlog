@@ -15,11 +15,11 @@
 /**
  * @brief Minor MtnLog version
  */
-#define MTNLOG_MINOR 4
+#define MTNLOG_MINOR 5
 
 /**
  * @brief MtnLog patch
  */
-#define MTNLOG_PATCH 1
+#define MTNLOG_PATCH 0
 
 #endif

@@ -41,6 +41,7 @@ static void _winResetConsoleColor(void)
 #endif
 
 static MtnLogLevel _logLevel = MTNLOG_INFO;
+static MtnLogCallback _cb = NULL;
 static char *_logFileName = NULL;
 static bool _color = false;
 static bool _outConsole = true;
@@ -125,6 +126,11 @@ void mtnlogSetLevel(const MtnLogLevel level)
     _logLevel = level;
 }
 
+void mtnlogSetCallback(const MtnLogCallback cb)
+{
+    _cb = cb;
+}
+
 void mtnlogTimestamps(const bool enable)
 {
     _timestamp = enable;
@@ -145,12 +151,13 @@ void mtnlogMessage(const MtnLogLevel level, const char *format, ...)
 
 void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
 {
-    char *rnTime = NULL;
-    if (_timestamp)
-        rnTime = _getTimeString(); /* get current time and date as a string */
+    char *rnTime = _getTimeString(); /* get current time and date as a string */
 
     va_list l2;
     va_copy(l2, l);
+
+    va_list l3;
+    va_copy(l3, l);
 
     if (level >= _logLevel && _outConsole)
     {
@@ -186,7 +193,7 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
         if (_color)
             printf("\x1b[39m");
 #endif
-        if (rnTime && _timestampConsole)
+        if (_timestamp && _timestampConsole)
             printf("%s ", rnTime);
         vprintf(format, l);
         putchar('\n');
@@ -203,7 +210,7 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
             return;
         }
 
-        if (rnTime)
+        if (_timestamp)
             fprintf(f, "[%s] %s ", _logLevelNames[level], rnTime);
         else
             fprintf(f, "[%s] ", _logLevelNames[level]);
@@ -213,8 +220,17 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
         fclose(f); /* close the log file */
     }
 
+    if (_cb)
+    {
+        char *msg;
+        asprintf(&msg, format, l3);
+        _cb(level, rnTime, msg);
+        free(msg);
+    }
+
     /* close va list */
     va_end(l2);
+    va_end(l3);
 
     /* free date time string */
     free(rnTime);

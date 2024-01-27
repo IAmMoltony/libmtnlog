@@ -27,6 +27,17 @@ typedef enum
 } MtnLogLevel;
 
 /**
+ * @brief Log callback function
+ * 
+ * Param 1: Log level
+ *
+ * Param 2: Timestamp
+ *
+ * Param 3: Message
+ */
+typedef void (*MtnLogCallback)(MtnLogLevel, const char *, const char *);
+
+/**
  * @brief Log message with context
  * @param level level of the message
  * @param ... variadic arguments including the format string
@@ -88,6 +99,12 @@ void mtnlogFileOutput(const bool enable);
  * @param level level
 */
 void mtnlogSetLevel(const MtnLogLevel level);
+
+/**
+ * @brief Set log callback
+ * @param cb callback
+ */
+void mtnlogSetCallback(const MtnLogCallback cb);
 
 /**
  * @brief Enable or disable log timestamps

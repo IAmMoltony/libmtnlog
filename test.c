@@ -1,5 +1,6 @@
 #include "mtnlog.h"
 #include "mtnlogversion.h"
+#include <stdio.h>
 
 static void _someFunction(void)
 {
@@ -9,6 +10,11 @@ static void _someFunction(void)
 
     /* context logging with tag */
     mtnlogMessageTagC(MTNLOG_INFO, "other tag", "Message with context and tag");
+}
+
+static void _logCallback(MtnLogLevel level, const char *timestamp, const char *msg)
+{
+    printf("Log callback. Level = %d, timestamp = `%s', msg = `%s'\n", level, timestamp, msg);
 }
 
 int main(void)
@@ -60,6 +66,10 @@ int main(void)
     mtnlogConsoleTimestamps(true);
     mtnlogMessage(MTNLOG_INFO, "Console timestamp test");
     mtnlogConsoleTimestamps(false);
+
+    /* callback test */
+    mtnlogSetCallback(_logCallback);
+    mtnlogMessage(MTNLOG_INFO, "Message asdfg");
 
     return 0;
 }
