@@ -42,7 +42,11 @@ typedef void (*MtnLogCallback)(MtnLogLevel, const char *, const char *);
  * @param level level of the message
  * @param ... variadic arguments including the format string
  */
+#ifdef __FILE_NAME__
+#define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE_NAME__, __func__, (level), __VA_ARGS__)
+#else
 #define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE__, __func__, (level), __VA_ARGS__)
+#endif
 
 /**
  * @brief Log message with tag and context
@@ -50,7 +54,11 @@ typedef void (*MtnLogCallback)(MtnLogLevel, const char *, const char *);
  * @param tag message tag
  * @param ... variadic arguments including the format string
  */
+#ifdef __FILE_NAME__
+#define mtnlogMessageTagC(level, tag, ...) mtnlogMessageTagCInternal(__LINE__, __FILE_NAME__, __func__, (level), (tag), __VA_ARGS__)
+#else
 #define mtnlogMessageTagC(level, tag, ...) mtnlogMessageTagCInternal(__LINE__, __FILE__, __func__, (level), (tag), __VA_ARGS__)
+#endif
 
 #ifdef __cplusplus
 extern "C" {
