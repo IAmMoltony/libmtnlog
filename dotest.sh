@@ -37,7 +37,7 @@ DoTestAll() {
 PrintHelp() {
     echo "Usage: $0 <compiler>"
     echo "       $0 help"
-    echo "Valid compilers are 'gcc', 'clang', 'tcc', 'tinycc', 'mingw', 'mingw32', 'mingw64', 'all'"
+    echo "Valid compilers are 'gcc', 'clang', 'tcc', 'tinycc' (alias of 'tcc'), 'mingw' (test using both 'mingw32' and 'mingw64'), 'mingw32', 'mingw64', 'all'"
     echo "'all' tests using all compilers"
 }
 
