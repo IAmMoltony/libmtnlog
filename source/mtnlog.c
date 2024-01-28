@@ -207,6 +207,7 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
             /* print error and close the va lists */
             perror(_logFileName);
             va_end(l2);
+            va_end(l3);
             return;
         }
 
