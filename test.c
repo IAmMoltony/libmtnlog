@@ -49,6 +49,11 @@ int main(void)
     mtnlogConsoleOutput(true);
     mtnlogMessage(MTNLOG_INFO, "Cosole output has been enabled!");
 
+    /* file output enable/disable test */
+    mtnlogFileOutput(false);
+    mtnlogMessage(MTNLOG_INFO, "This message is not in the log file.");
+    mtnlogFileOutput(true);
+
     /* tag test */
     mtnlogMessageTag(MTNLOG_INFO, "THIS IS A TAG", "Message with tag");
 
