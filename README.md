@@ -19,6 +19,7 @@ add MtnLog's include files and compile its source files.
 - Change what log level will be printed to the user
 - Logging into a file
 - Colored log messages
+- Log callback
 
 ## Testing
 
