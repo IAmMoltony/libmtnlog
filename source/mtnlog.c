@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
+#include <errno.h>
 
 #ifdef WIN32
 // Windows specific code
@@ -37,6 +38,43 @@ static void _winSetConsoleColor(MtnLogLevel l)
 static void _winResetConsoleColor(void)
 {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), _winOriginalConsoleAttrs);
+}
+
+#endif
+
+#ifdef _MSC_VER
+static int _winVAsprintf(char **strp, const char *fmt, va_list ap)
+{
+    va_list apCopy;
+    int fmtLen, realLen;
+    size_t reqSize;
+
+    *strp = NULL;
+
+    va_copy(apCopy, ap);
+
+    fmtLen = _vscprintf(fmt, apCopy);
+    va_end(apCopy);
+
+    if (fmtLen < 0)
+        return -1;
+
+    reqSize = ((size_t)fmtLen) + 1;
+    *strp = (char*)malloc(reqSize);
+
+    if (*strp == NULL)
+        return -1;
+
+    realLen = vsnprintf_s(*strp, reqSize, reqSize - 1, fmt, ap);
+
+    if (realLen != fmtLen)
+    {
+        free(*strp);
+        *strp = NULL;
+        return -1;
+    }
+
+    return fmtLen;
 }
 #endif
 
@@ -221,7 +259,11 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
     if (_cb)
     {
         char *msg;
+#if _MSC_VER
+        _winVAsprintf(&msg, format, l3);
+#else
         asprintf(&msg, format, l3);
+#endif
         _cb(level, rnTime, msg);
         free(msg);
     }
