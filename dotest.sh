@@ -32,7 +32,11 @@ DoTestMinGW32() {
         echo "32-bit MinGW not found (command \`i686-w64-mingw32-gcc')"
     else
         echo "Doing test using 32-bit MinGW"
-        i686-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -g -o test && wine test.exe
+        if ! command -v wine &> /dev/null; then
+            echo "Wine not found (command \`wine')"
+        else
+            i686-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -g -o test && wine test.exe
+        fi
     fi
 }
 
@@ -41,7 +45,11 @@ DoTestMinGW64() {
         echo "64-bit MinGW not found (command \`x86_64-w64-mingw32-gcc')"
     else
         echo "Doing test using 64-bit MinGW"
-        x86_64-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -g -o test && wine64 test.exe
+        if ! command -v wine &> /dev/null; then
+            echo "Wine not found (command \`wine')"
+        else
+            x86_64-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -g -o test && wine64 test.exe
+        fi
     fi
 }
 
