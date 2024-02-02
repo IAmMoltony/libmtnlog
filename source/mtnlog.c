@@ -262,7 +262,7 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
 #if _MSC_VER
         _winVAsprintf(&msg, format, l3);
 #else
-        asprintf(&msg, format, l3);
+        vasprintf(&msg, format, l3);
 #endif
         _cb(level, rnTime, msg);
         free(msg);
