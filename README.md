@@ -50,9 +50,10 @@ The library was tested on the following platforms:
 
 - Linux
 - Windows
-- Nintendo DS
+- Nintendo DS (homebrew using devkitPro)
 - Haiku
 - BSD (tested on NetBSD)
+- Nintendo GBA (homebrew using devkitPro)
 
 However, it should work with other POSIX-compatible OSes.
 
