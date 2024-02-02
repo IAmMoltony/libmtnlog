@@ -29,7 +29,15 @@ looks about right.
 
 ### Running tests
 
-Tests can be run using the `dotest.sh` script:
+#### Using MSVC
+
+MSVC testing can be done using `dotest-msvc.bat` like this:
+
+`dotest-msvc`
+
+#### Non-MSVC
+
+Non-MSVC tests can be run using the `dotest.sh` script:
 
 `./dotest.sh`
 
