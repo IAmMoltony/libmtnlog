@@ -1,28 +1,48 @@
 #!/usr/bin/env bash
 
 DoTestGCC() {
-    echo "Doing test using GCC"
-    gcc test.c source/mtnlog.c -iquote include -g -o test -std=gnu89 -Wall -Wextra && ./test
+    if ! command -v gcc &> /dev/null; then
+        echo "GCC not found (command \`gcc')"
+    else
+        echo "Doing test using GCC"
+        gcc test.c source/mtnlog.c -iquote include -g -o test -std=gnu89 -Wall -Wextra && ./test
+    fi
 }
 
 DoTestClang() {
-    echo "Doing test using Clang"
-    clang test.c source/mtnlog.c -iquote include -g -o test && ./test
+    if ! command -v clang &> /dev/null; then
+        echo "Clang not found (command \`clang')"
+    else
+        echo "Doing test using Clang"
+        clang test.c source/mtnlog.c -iquote include -g -o test && ./test
+    fi
 }
 
 DoTestTCC() {
-    echo "Doing test using TinyCC"
-    tcc test.c source/mtnlog.c -Iinclude -g -o test && ./test
+    if ! command -v tcc &> /dev/null; then
+        echo "TCC not found (command \`tcc')"
+    else
+        echo "Doing test using TinyCC"
+        tcc test.c source/mtnlog.c -Iinclude -g -o test && ./test
+    fi
 }
 
 DoTestMinGW32() {
-    echo "Doing test using 32-bit MinGW"
-    i686-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -g -o test && wine test.exe
+    if ! command -v i686-w64-mingw32-gcc &> /dev/null; then
+        echo "32-bit MinGW not found (command \`i686-w64-mingw32-gcc')"
+    else
+        echo "Doing test using 32-bit MinGW"
+        i686-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -g -o test && wine test.exe
+    fi
 }
 
 DoTestMinGW64() {
-    echo "Doing test using 64-bit MinGW"
-    x86_64-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -g -o test && wine64 test.exe
+    if ! command -v x86_64-w64-mingw32-gcc &> /dev/null; then
+        echo "64-bit MinGW not found (command \`x86_64-w64-mingw32-gcc')"
+    else
+        echo "Doing test using 64-bit MinGW"
+        x86_64-w64-mingw32-gcc test.c source/mtnlog.c -iquote include -DWIN32_LEAN_AND_MEAN -g -o test && wine64 test.exe
+    fi
 }
 
 DoTestAll() {
