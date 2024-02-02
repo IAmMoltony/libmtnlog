@@ -23,7 +23,7 @@ add MtnLog's include files and compile its source files.
 
 ## Testing
 
-Instead of using fancy testing toolkits, there is instead a program that
+Instead of using fancy testing toolkits, there is instead a script that
 utilises every feature of the library and it is checked whether the output
 looks about right.
 
@@ -49,7 +49,7 @@ All you have to do is install it and run `doxygen` in the repo folder.
 The library was tested on the following platforms:
 
 - Linux
-- Windows (with Wine)
+- Windows
 - Nintendo DS
 - Haiku
 - BSD (tested on NetBSD)
