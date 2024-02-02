@@ -55,7 +55,7 @@ The library was tested on the following platforms:
 - BSD (tested on NetBSD)
 - Nintendo GBA (homebrew using devkitPro)
 
-However, it should work with other POSIX-compatible OSes.
+However, it should work with other POSIX-compatible OSes and environments.
 
 On Windows, the library uses the Windows API for colored output. On other
 platforms it uses ANSI escape sequences.
@@ -72,3 +72,4 @@ The library is known to work on the following compilers:
 - TCC (TinyCC)
 - MinGW (i686 and x86_64)
 - Intel oneAPI C compiler
+- MSVC (Visual C++)
