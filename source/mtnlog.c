@@ -221,7 +221,7 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
     if (_cb)
     {
         char *msg;
-        asprintf(&msg, format, l3);
+        vasprintf(&msg, format, l3);
         _cb(level, rnTime, msg);
         free(msg);
     }
