@@ -70,3 +70,4 @@ The library is known to work on the following compilers:
 - Clang
 - TCC (TinyCC)
 - MinGW (i686 and x86_64)
+- Intel oneAPI C compiler

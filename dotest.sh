@@ -53,6 +53,15 @@ DoTestMinGW64() {
     fi
 }
 
+DoTestICX() {
+    if ! command -v icx &> /dev/null; then
+        echo "Intel compiler not found (command \`icx')"
+    else
+        echo "Doing test using Intel compiler"
+        icx -Iinclude test.c source/mtnlog.c -Rno-debug-disables-optimization -g -o test && ./test
+    fi
+}
+
 DoTestAll() {
     echo "Doing test using every compiler"
     DoTestGCC
@@ -60,12 +69,13 @@ DoTestAll() {
     DoTestTCC
     DoTestMinGW32
     DoTestMinGW64
+    DoTestICX
 }
 
 PrintHelp() {
     echo "Usage: $0 <compiler>"
     echo "       $0 help"
-    echo "Valid compilers are 'gcc', 'clang', 'tcc', 'tinycc' (alias of 'tcc'), 'mingw' (test using both 'mingw32' and 'mingw64'), 'mingw32', 'mingw64', 'all'"
+    echo "Valid compilers are 'gcc', 'clang', 'tcc', 'tinycc' (alias of 'tcc'), 'mingw' (test using both 'mingw32' and 'mingw64'), 'mingw32', 'mingw64', 'intel', 'icx' (alias of 'intel'), 'all'"
     echo "'all' tests using all compilers"
 }
 
@@ -86,6 +96,10 @@ elif [ "$1" == "mingw32" ]; then
     DoTestMinGW32
 elif [ "$1" == "mingw64" ]; then
     DoTestMinGW64
+elif [ "$1" == "intel" ]; then
+    DoTestICX
+elif [ "$1" == "icx" ]; then
+    DoTestICX
 elif [ "$1" == "all" ]; then
     DoTestAll
 elif [ "$1" == "help" ]; then
