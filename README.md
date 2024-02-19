@@ -80,4 +80,13 @@ The library is known to work on the following compilers:
 - TCC (TinyCC)
 - MinGW (i686 and x86_64)
 - Intel oneAPI C compiler
-- MSVC (Visual C++)
+- Visual Studio 2010+
+
+## Troubleshooting
+
+### `stdbool.h` not found
+
+MtnLog can work without `stdbool.h`. Define the `MTNLOG_NO_STDBOOL` macro
+in your compiler/build system options.
+
+This problem usually happens on really old compilers.
