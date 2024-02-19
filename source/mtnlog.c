@@ -1,6 +1,9 @@
 #include "mtnlog.h"
 #include "mtnlogversion.h"
 #include <stdlib.h>
+#if !defined(_GNU_SOURCE) && defined(__GNUC__)
+	#define _GNU_SOURCE
+#endif
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
