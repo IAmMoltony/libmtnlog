@@ -6,7 +6,9 @@
 #include <string.h>
 #include <errno.h>
 
-#define va_copy(dest, src) ((dest) = (src))
+#ifndef va_copy
+	#define va_copy(dest, src) ((dest) = (src))
+#endif
 
 #ifdef WIN32
 // Windows specific code
