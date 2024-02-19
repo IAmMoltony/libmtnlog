@@ -10,7 +10,7 @@
 	#define va_copy(dest, src) ((dest) = (src))
 #endif
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
 // Windows specific code
 #include <windows.h>
 
