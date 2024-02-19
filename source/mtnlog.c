@@ -6,6 +6,8 @@
 #include <string.h>
 #include <errno.h>
 
+#define va_copy(dest, src) ((dest) = (src))
+
 #ifdef WIN32
 // Windows specific code
 #include <windows.h>
@@ -81,11 +83,11 @@ static int _winVAsprintf(char **strp, const char *fmt, va_list ap)
 static MtnLogLevel _logLevel = MTNLOG_INFO;
 static MtnLogCallback _cb = NULL;
 static char *_logFileName = NULL;
-static bool _color = false;
-static bool _outConsole = true;
-static bool _outFile = true;
-static bool _timestamp = true;
-static bool _timestampConsole = false;
+static MTNLOG_BOOL _color = 0;
+static MTNLOG_BOOL _outConsole = 1;
+static MTNLOG_BOOL _outFile = 1;
+static MTNLOG_BOOL _timestamp = 1;
+static MTNLOG_BOOL _timestampConsole = 0;
 
 static const char *_logLevelNames[] = {
     "INFO",
@@ -112,6 +114,7 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName)
     {
         /* open the log file */
         FILE *f = fopen(_logFileName, "w");
+		char *rnTime;
         if (!f)
         {
             perror(_logFileName);
@@ -119,7 +122,7 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName)
         }
 
         /* print that log started */
-        char *rnTime = _getTimeString();
+        rnTime = _getTimeString();
         fprintf(f, " *** MtnLog version %d.%d.%d: started log at %s\n", MTNLOG_MAJOR, MTNLOG_MINOR, MTNLOG_PATCH, rnTime);
         free(rnTime);
 
@@ -131,27 +134,27 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName)
 #endif
 }
 
-void mtnlogColor(const bool enable)
+void mtnlogColor(const MTNLOG_BOOL enable)
 {
     _color = enable;
 }
 
-bool mtnlogCheckColor(void)
+MTNLOG_BOOL mtnlogCheckColor(void)
 {
 #ifdef WIN32
-    return true;
+    return 1;
 #else
     const char *termType = getenv("TERM");
     return (termType != NULL && (strstr(termType, "color") != NULL || strstr(termType, "xterm") != NULL || strstr(termType, "wsvt25") != NULL));
 #endif
 }
 
-void mtnlogConsoleOutput(const bool enable)
+void mtnlogConsoleOutput(const MTNLOG_BOOL enable)
 {
     _outConsole = enable;
 }
 
-void mtnlogFileOutput(const bool enable)
+void mtnlogFileOutput(const MTNLOG_BOOL enable)
 {
     _outFile = enable;
 }
@@ -166,12 +169,12 @@ void mtnlogSetCallback(const MtnLogCallback cb)
     _cb = cb;
 }
 
-void mtnlogTimestamps(const bool enable)
+void mtnlogTimestamps(const MTNLOG_BOOL enable)
 {
     _timestamp = enable;
 }
 
-void mtnlogConsoleTimestamps(const bool enable)
+void mtnlogConsoleTimestamps(const MTNLOG_BOOL enable)
 {
     _timestampConsole = enable;
 }
@@ -187,11 +190,10 @@ void mtnlogMessage(const MtnLogLevel level, const char *format, ...)
 void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
 {
     char *rnTime = _getTimeString(); /* get current time and date as a string */
-
     va_list l2;
-    va_copy(l2, l);
+	va_list l3;
 
-    va_list l3;
+    va_copy(l2, l);
     va_copy(l3, l);
 
     if (level >= _logLevel && _outConsole)
@@ -286,7 +288,9 @@ void mtnlogMessageTag(const MtnLogLevel level, const char *tag, const char *form
 
 void mtnlogVMessageTag(const MtnLogLevel level, const char *tag, const char *format, va_list l)
 {
+	char *formatString;
     char *tagString = (char *)malloc(sizeof(char) * (strlen(tag) + 3)); /* 3 is the brackets and null terminator */
+	int fullMsgLen;
     if (!tagString)
     {
         perror("mtnlog: Failed to create tag string");
@@ -294,8 +298,8 @@ void mtnlogVMessageTag(const MtnLogLevel level, const char *tag, const char *for
     }
     sprintf(tagString, "[%s]", tag);
 
-    int fullMsgLen = strlen(tagString) + strlen(format) + 2;
-    char *formatString = (char *)malloc(sizeof(char) * fullMsgLen);
+    fullMsgLen = strlen(tagString) + strlen(format) + 2;
+    formatString = (char *)malloc(sizeof(char) * fullMsgLen);
     if (!formatString)
     {
         perror("mtnlog: Failed to create format string");
@@ -312,19 +316,28 @@ static char *_ctxMessageString = NULL;
 
 static void _mtnlogCreateLogContext(const int line, const char *file, const char *function, const char *message)
 {
+	int funcLen;
+	char *ctxString;
     char lineNumString[12];
-    snprintf(lineNumString, 12, "%d", line);
+	int messageLen;
+	int ctxStringLen;
 
-    int ctxStringLen = strlen(file) + 1 + strlen(lineNumString) + 1 + strlen(function) + 3;
-    char *ctxString = malloc(sizeof(char) * ctxStringLen);
+	funcLen = strlen(function);
+    sprintf(lineNumString, "%d", line);
+
+    ctxStringLen = strlen(file) + 1 + strlen(lineNumString) + 1 + strlen(function) + 3;
+    ctxString = malloc(sizeof(char) * ctxStringLen);
     if (!ctxString)
     {
         perror("mtnlog: Failed to create context string");
         return;
     }
-    sprintf(ctxString, "%s:%s %s()", file, lineNumString, function);
-    
-    int messageLen = strlen(message) + 1 + strlen(ctxString) + 1;
+    if (funcLen)
+        sprintf(ctxString, "%s:%s %s()", file, lineNumString, function);
+    else
+        sprintf(ctxString, "%s: %s", file, lineNumString);
+ 
+    messageLen = strlen(message) + 1 + strlen(ctxString) + 1;
     _ctxMessageString = malloc(sizeof(char) * messageLen);
     if (!_ctxMessageString)
     {
@@ -338,8 +351,8 @@ static void _mtnlogCreateLogContext(const int line, const char *file, const char
 
 void mtnlogMessageCInternal(const int line, const char *file, const char *function, const MtnLogLevel level, const char *message, ...)
 {
+	va_list va;
     _mtnlogCreateLogContext(line, file, function, message);
-    va_list va;
     va_start(va, message);
     mtnlogVMessage(level, _ctxMessageString, va);
     va_end(va);
@@ -347,8 +360,8 @@ void mtnlogMessageCInternal(const int line, const char *file, const char *functi
 
 void mtnlogMessageTagCInternal(const int line, const char *file, const char *function, const MtnLogLevel level, const char *tag, const char *message, ...)
 {
+	va_list va;
     _mtnlogCreateLogContext(line, file, function, message);
-    va_list va;
     va_start(va, message);
     mtnlogVMessageTag(level, tag, _ctxMessageString, va);
     va_end(va);

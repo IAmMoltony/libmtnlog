@@ -13,7 +13,13 @@
 #ifndef MTNLOG_H_
 #define MTNLOG_H_ 1
 
-#include <stdbool.h>
+#ifdef MTNLOG_NO_STDBOOL
+    #define MTNLOG_BOOL int
+#else
+    #include <stdbool.h>
+    #define MTNLOG_BOOL bool
+#endif
+
 #include <stdarg.h>
 
 /**
@@ -43,9 +49,17 @@ typedef void (*MtnLogCallback)(MtnLogLevel, const char *, const char *);
  * @param ... variadic arguments including the format string
  */
 #ifdef __FILE_NAME__
-#define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE_NAME__, __func__, (level), __VA_ARGS__)
+    #ifdef __func__
+        #define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE_NAME__, __func__, (level), __VA_ARGS__)
+    #else
+        #define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE_NAME__, "", (level), __VA_ARGS__)
+    #endif
 #else
-#define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE__, __func__, (level), __VA_ARGS__)
+    #ifdef __func__
+        #define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE__, __func__, (level), __VA_ARGS__)
+    #else
+        #define mtnlogMessageC(level, ...) mtnlogMessageCInternal(__LINE__, __FILE__, "", (level), __VA_ARGS__)
+    #endif
 #endif
 
 /**
@@ -55,9 +69,17 @@ typedef void (*MtnLogCallback)(MtnLogLevel, const char *, const char *);
  * @param ... variadic arguments including the format string
  */
 #ifdef __FILE_NAME__
-#define mtnlogMessageTagC(level, tag, ...) mtnlogMessageTagCInternal(__LINE__, __FILE_NAME__, __func__, (level), (tag), __VA_ARGS__)
+    #ifdef __func__
+        #define mtnlogMessageTagC(level, tag, ...) mtnlogMessageTagCInternal(__LINE__, __FILE_NAME__, __func__, (level), (tag), __VA_ARGS__)
+    #else
+        #define mtnlogMessageTagC(level, tag, ...) mtnlogMessageTagCInternal(__LINE__, __FILE_NAME__, "", (level), (tag), __VA_ARGS__)
+    #endif
 #else
-#define mtnlogMessageTagC(level, tag, ...) mtnlogMessageTagCInternal(__LINE__, __FILE__, __func__, (level), (tag), __VA_ARGS__)
+    #ifdef __func__
+        #define mtnlogMessageTagC(level, tag, ...) mtnlogMessageTagCInternal(__LINE__, __FILE__, __func__, (level), (tag), __VA_ARGS__)
+    #else
+        #define mtnlogMessageTagC(level, tag, ...) mtnlogMessageTagCInternal(__LINE__, __FILE__, "", (level), (tag), __VA_ARGS__)
+    #endif
 #endif
 
 #ifdef __cplusplus
@@ -77,7 +99,7 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName);
  *
  * Color is only supported for platforms that support ANSI escape sequences for colors. This will not change the log file, only console output.
 */
-void mtnlogColor(const bool enable);
+void mtnlogColor(const MTNLOG_BOOL enable);
 
 /**
  * @brief Check if color is supported
@@ -86,13 +108,13 @@ void mtnlogColor(const bool enable);
  *
  * On non-Windows platforms this checks the `TERM` environment variable.
  */
-bool mtnlogCheckColor(void);
+MTNLOG_BOOL mtnlogCheckColor(void);
 
 /**
  * @brief Enable or disable outputting log messages into console (stdout)
  * @param enable enable or disable console output
 */
-void mtnlogConsoleOutput(const bool enable);
+void mtnlogConsoleOutput(const MTNLOG_BOOL enable);
 
 /**
  * @brief Enable or disable outputting log messages into the log file
@@ -100,7 +122,7 @@ void mtnlogConsoleOutput(const bool enable);
  *
  * This can be useful if you're working in an environment without a file system.
  */
-void mtnlogFileOutput(const bool enable);
+void mtnlogFileOutput(const MTNLOG_BOOL enable);
 
 /**
  * @brief Set logging level
@@ -118,13 +140,13 @@ void mtnlogSetCallback(const MtnLogCallback cb);
  * @brief Enable or disable log timestamps
  * @param enable enable or disable
  */
-void mtnlogTimestamps(const bool enable);
+void mtnlogTimestamps(const MTNLOG_BOOL enable);
 
 /**
  * @brief Enable or disable putting timestamps in console
  * @param enable enable or disable
  */
-void mtnlogConsoleTimestamps(const bool enable);
+void mtnlogConsoleTimestamps(const MTNLOG_BOOL enable);
 
 /**
  * @brief Print a message to the log

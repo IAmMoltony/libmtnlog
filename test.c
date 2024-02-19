@@ -31,10 +31,10 @@ int main(void)
 
     /* set color */
     if (mtnlogCheckColor())
-        mtnlogColor(true);
+        mtnlogColor(1);
     else
     {
-        mtnlogColor(false);
+        mtnlogColor(0);
         mtnlogMessage(MTNLOG_WARNING, "Terminal doesn't seem to support color :(");
     }
     
@@ -44,15 +44,15 @@ int main(void)
     mtnlogMessage(MTNLOG_WARNING, "Color test: warning");
 
     /* console output enable/disable test */
-    mtnlogConsoleOutput(false);
+    mtnlogConsoleOutput(0);
     mtnlogMessage(MTNLOG_INFO, "Console output has been disabled!");
-    mtnlogConsoleOutput(true);
+    mtnlogConsoleOutput(1);
     mtnlogMessage(MTNLOG_INFO, "Cosole output has been enabled!");
 
     /* file output enable/disable test */
-    mtnlogFileOutput(false);
+    mtnlogFileOutput(0);
     mtnlogMessage(MTNLOG_INFO, "This message is not in the log file.");
-    mtnlogFileOutput(true);
+    mtnlogFileOutput(1);
 
     /* tag test */
     mtnlogMessageTag(MTNLOG_INFO, "THIS IS A TAG", "Message with tag");
@@ -62,15 +62,15 @@ int main(void)
     _someFunction();
 
     /* timestamp enable/disable test */
-    mtnlogTimestamps(false);
+    mtnlogTimestamps(0);
     mtnlogMessage(MTNLOG_INFO, "Timestamps have been disabled");
-    mtnlogTimestamps(true);
+    mtnlogTimestamps(1);
     mtnlogMessage(MTNLOG_INFO, "Timestamps have been enabled");
 
     /* timestamp in console enable/disable test */
-    mtnlogConsoleTimestamps(true);
+    mtnlogConsoleTimestamps(1);
     mtnlogMessage(MTNLOG_INFO, "Console timestamp test");
-    mtnlogConsoleTimestamps(false);
+    mtnlogConsoleTimestamps(0);
 
     /* callback test */
     mtnlogSetCallback(_logCallback);
