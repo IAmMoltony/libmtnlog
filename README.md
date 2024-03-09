@@ -63,7 +63,8 @@ The library was tested on the following platforms:
 - BSD (tested on NetBSD)
 - Nintendo GBA (homebrew using devkitPro)
 
-However, it should work with other POSIX-compatible OSes and environments.
+However, it should work with other POSIX-compatible OSes and environments,
+such as macOS.
 
 On Windows, the library uses the Windows API for colored output. On other
 platforms it uses ANSI escape sequences.
