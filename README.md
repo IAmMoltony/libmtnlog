@@ -4,6 +4,12 @@
 
 MtnLog is a really simple logging library. Originally created for [ds-craft](https://github.com/IAmMoltony/ds-craft).
 
+## Notice
+
+This library is now in *maintenance mode*. It will receive no new functionality, but
+it will still have bug fixes, accept pull requests, review issues, add support for
+more compilers and platforms and documentation updates.
+
 ## Using the library
 
 Paste the header and source code of the library into your project somewhere. I
@@ -19,7 +25,7 @@ add MtnLog's include files and compile its source files.
 - Change what log level will be printed to the user
 - Logging into a file
 - Colored log messages
-- Log callback
+- Log callback - run any code after logging a message
 
 ## Testing
 
