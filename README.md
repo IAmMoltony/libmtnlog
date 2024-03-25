@@ -53,6 +53,11 @@ see the whole list, you can bring up help: `./dotest.sh help`
 Please note that you need `bash` installed on your machine for the script
 to work.
 
+### Checking for memory leaks
+
+Checking for memory leaks can be done using `check-memleaks.sh`. The script
+requires `valgrind` to be installed on the system.
+
 ## Docs
 
 MtnLog uses [Doxygen](https://doxygen.nl) for generating documentation.
@@ -85,7 +90,7 @@ The library is known to work on the following compilers:
 - GCC
 - Clang
 - TCC (TinyCC)
-- MinGW (i686 and x86_64)
+- MinGW
 - Intel oneAPI C compiler
 - Visual Studio 2010+
 
