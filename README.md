@@ -6,7 +6,7 @@ MtnLog is a really simple logging library. Originally created for [ds-craft](htt
 
 ## Notice
 
-This library is now in *maintenance mode*. It will receive no new functionality, but
+This library is now in *maintenance mode*. It won't actively receive new functionality, but
 it will still have bug fixes, accept pull requests, review issues, add support for
 more compilers and platforms and documentation updates.
 
