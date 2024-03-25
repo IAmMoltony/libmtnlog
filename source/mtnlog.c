@@ -1,9 +1,6 @@
 #include "mtnlog.h"
 #include "mtnlogversion.h"
 #include <stdlib.h>
-#if !defined(_GNU_SOURCE) && defined(__GNUC__)
-	#define _GNU_SOURCE
-#endif
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
@@ -315,6 +312,7 @@ void mtnlogVMessageTag(const MtnLogLevel level, const char *tag, const char *for
     free(tagString);
 
     mtnlogVMessage(level, formatString, l);
+    free(formatString);
 }
 
 static char *_ctxMessageString = NULL;
@@ -360,6 +358,7 @@ void mtnlogMessageCInternal(const int line, const char *file, const char *functi
     _mtnlogCreateLogContext(line, file, function, message);
     va_start(va, message);
     mtnlogVMessage(level, _ctxMessageString, va);
+    free(_ctxMessageString);
     va_end(va);
 }
 
@@ -369,5 +368,6 @@ void mtnlogMessageTagCInternal(const int line, const char *file, const char *fun
     _mtnlogCreateLogContext(line, file, function, message);
     va_start(va, message);
     mtnlogVMessageTag(level, tag, _ctxMessageString, va);
+    free(_ctxMessageString);
     va_end(va);
 }

@@ -5,7 +5,7 @@ DoTestGCC() {
         echo "GCC not found (command \`gcc')"
     else
         echo "Doing test using GCC"
-        gcc test.c source/mtnlog.c -iquote include -g -o test -std=gnu89 -Wall -Wextra && ./test
+        gcc test.c source/mtnlog.c -iquote include -g -o test -std=gnu99 -Wall -Wextra && ./test
     fi
 }
 
