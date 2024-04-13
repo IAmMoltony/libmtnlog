@@ -7,7 +7,7 @@
 #include <errno.h>
 
 #ifndef va_copy
-	#define va_copy(dest, src) ((dest) = (src))
+    #define va_copy(dest, src) ((dest) = (src))
 #endif
 
 #if defined(WIN32) || defined(_WIN32)
@@ -116,7 +116,7 @@ void mtnlogInit(const MtnLogLevel level, const char *logFileName)
     {
         /* open the log file */
         FILE *f = fopen(_logFileName, "w");
-		char *rnTime;
+        char *rnTime;
         if (!f)
         {
             perror(_logFileName);
@@ -193,7 +193,7 @@ void mtnlogVMessage(const MtnLogLevel level, const char *format, va_list l)
 {
     char *rnTime = _getTimeString(); /* get current time and date as a string */
     va_list l2;
-	va_list l3;
+    va_list l3;
 
     va_copy(l2, l);
     va_copy(l3, l);
@@ -290,9 +290,9 @@ void mtnlogMessageTag(const MtnLogLevel level, const char *tag, const char *form
 
 void mtnlogVMessageTag(const MtnLogLevel level, const char *tag, const char *format, va_list l)
 {
-	char *formatString;
+    char *formatString;
     char *tagString = (char *)malloc(sizeof(char) * (strlen(tag) + 3)); /* 3 is the brackets and null terminator */
-	int fullMsgLen;
+    int fullMsgLen;
     if (!tagString)
     {
         perror("mtnlog: Failed to create tag string");
@@ -319,13 +319,13 @@ static char *_ctxMessageString = NULL;
 
 static void _mtnlogCreateLogContext(const int line, const char *file, const char *function, const char *message)
 {
-	int funcLen;
-	char *ctxString;
+    int funcLen;
+    char *ctxString;
     char lineNumString[12];
-	int messageLen;
-	int ctxStringLen;
+    int messageLen;
+    int ctxStringLen;
 
-	funcLen = strlen(function);
+    funcLen = strlen(function);
     sprintf(lineNumString, "%d", line);
 
     ctxStringLen = strlen(file) + 1 + strlen(lineNumString) + 1 + strlen(function) + 3;
@@ -354,7 +354,7 @@ static void _mtnlogCreateLogContext(const int line, const char *file, const char
 
 void mtnlogMessageCInternal(const int line, const char *file, const char *function, const MtnLogLevel level, const char *message, ...)
 {
-	va_list va;
+    va_list va;
     _mtnlogCreateLogContext(line, file, function, message);
     va_start(va, message);
     mtnlogVMessage(level, _ctxMessageString, va);
@@ -364,7 +364,7 @@ void mtnlogMessageCInternal(const int line, const char *file, const char *functi
 
 void mtnlogMessageTagCInternal(const int line, const char *file, const char *function, const MtnLogLevel level, const char *tag, const char *message, ...)
 {
-	va_list va;
+    va_list va;
     _mtnlogCreateLogContext(line, file, function, message);
     va_start(va, message);
     mtnlogVMessageTag(level, tag, _ctxMessageString, va);
