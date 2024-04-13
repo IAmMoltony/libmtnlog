@@ -1,9 +1,29 @@
+# Vim swap files
 *.swp
+
+# Test program log file
 test.log
+
+# Test program (Windows)
 test.exe
+
+# Test program (non-Windows)
 test
+
+# Documentation
 docs/
+
+# CPPCheck project file
 mtnlog.cppcheck
+
+# CPPCheck build directory
 mtnlog-cppcheck-build-dir
+
+# Doxygen warnings
 doxygen-warn.log
+
+# MSVC object files
 *.obj
+
+# Vim backup files
+*.un~
