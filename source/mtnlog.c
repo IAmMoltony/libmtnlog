@@ -129,15 +129,7 @@ static char *_getTimeString(void)
 void mtnlogInit(const MtnLogLevel level, const char *logFileName)
 {
     mtnlogSetLevel(level); /* set log level */
-
-    /* set log file name */
-    _logFileName = (char *)malloc(sizeof(char) * strlen(logFileName));
-    if (!_logFileName)
-    {
-        perror("Failed to allocate log file name buffer");
-        return;
-    }
-    strcpy(_logFileName, logFileName);
+    _logFileName = (char *)logFileName; /* set log file name */
 
     if (_outFile)
     {
