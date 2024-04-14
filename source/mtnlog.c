@@ -110,7 +110,7 @@ static char *_getTimeString(void)
 void mtnlogInit(const MtnLogLevel level, const char *logFileName)
 {
     mtnlogSetLevel(level); /* set log level */
-    _logFileName = (char *)logFileName; /* set log file name */
+    strcpy(_logFileName, logFileName); /* set log file name */
 
     if (_outFile)
     {
