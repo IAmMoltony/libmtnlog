@@ -20,6 +20,6 @@
 /**
  * @brief MtnLog patch
  */
-#define MTNLOG_PATCH 1
+#define MTNLOG_PATCH 2
 
 #endif
