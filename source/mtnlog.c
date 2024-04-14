@@ -364,7 +364,7 @@ static void _mtnlogCreateLogContext(const int line, const char *file, const char
     if (funcLen)
         sprintf(ctxString, "%s:%s %s()", file, lineNumString, function);
     else
-        sprintf(ctxString, "%s: %s", file, lineNumString);
+        sprintf(ctxString, "%s:%s", file, lineNumString);
  
     messageLen = strlen(message) + 1 + strlen(ctxString) + 1;
     _ctxMessageString = malloc(sizeof(char) * messageLen);
