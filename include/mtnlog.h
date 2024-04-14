@@ -35,11 +35,11 @@ typedef enum
 /**
  * @brief Log callback function
  * 
- * Param 1: Log level
+ * Parameter 1: Log level
  *
- * Param 2: Timestamp
+ * Parameter 2: Timestamp
  *
- * Param 3: Message
+ * Parameter 3: Message
  */
 typedef void (*MtnLogCallback)(MtnLogLevel, const char *, const char *);
 
@@ -120,7 +120,7 @@ void mtnlogConsoleOutput(const MTNLOG_BOOL enable);
  * @brief Enable or disable outputting log messages into the log file
  * @param enable Enable ot disable file output
  *
- * This can be useful if you're working in an environment without a file system.
+ * This can be useful if you're working in an environment without a file system or want to only have a log in the console.
  */
 void mtnlogFileOutput(const MTNLOG_BOOL enable);
 

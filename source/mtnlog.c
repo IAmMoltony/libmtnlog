@@ -16,6 +16,9 @@
 
 static WORD _winOriginalConsoleAttrs;
 
+/**
+ * @brief Windows-specific: Get console attributes and store them internally
+ */
 static void _winGetOriginalAttrs(void)
 {
     CONSOLE_SCREEN_BUFFER_INFO ci;
@@ -23,6 +26,10 @@ static void _winGetOriginalAttrs(void)
     _winOriginalConsoleAttrs = ci.wAttributes;
 }
 
+/**
+ * @brief Windows-specific: Set console color based on the log level
+ * @param l log level
+ */
 static void _winSetConsoleColor(MtnLogLevel l)
 {
     switch (l)
@@ -39,6 +46,9 @@ static void _winSetConsoleColor(MtnLogLevel l)
     }
 }
 
+/**
+ * @brief Windows-specific: Reset console color to default
+ */
 static void _winResetConsoleColor(void)
 {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), _winOriginalConsoleAttrs);
@@ -47,6 +57,12 @@ static void _winResetConsoleColor(void)
 #endif
 
 #ifdef _MSC_VER
+/**
+ * @brief MSVC-specific: vasprintf implementation
+ * @param strp string to create
+ * @param fmt formatting string
+ * @param ap list of parameters
+ */
 static int _winVAsprintf(char **strp, const char *fmt, va_list ap)
 {
     va_list apCopy;
@@ -97,6 +113,9 @@ static const char *_logLevelNames[] = {
     "ERROR",
 };
 
+/**
+ * @brief Get the current time as a human-readable string
+ */
 static char *_getTimeString(void)
 {
     char *rnTime = malloc(28 * sizeof(char));
@@ -144,7 +163,7 @@ void mtnlogColor(const MTNLOG_BOOL enable)
 MTNLOG_BOOL mtnlogCheckColor(void)
 {
 #ifdef WIN32
-    return 1;
+    return 1; // On Windows we assume color is always supported
 #else
     const char *termType = getenv("TERM");
     return (termType != NULL && (strstr(termType, "color") != NULL || strstr(termType, "xterm") != NULL || strstr(termType, "wsvt25") != NULL));
@@ -317,6 +336,13 @@ void mtnlogVMessageTag(const MtnLogLevel level, const char *tag, const char *for
 
 static char *_ctxMessageString = NULL;
 
+/**
+ * @brief Create log context and store it internally
+ * @param line line number
+ * @param file file name
+ * @param function function name
+ * @param message log message
+ */
 static void _mtnlogCreateLogContext(const int line, const char *file, const char *function, const char *message)
 {
     int funcLen;
