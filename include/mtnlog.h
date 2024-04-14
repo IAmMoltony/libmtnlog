@@ -13,6 +13,9 @@
 #ifndef MTNLOG_H_
 #define MTNLOG_H_ 1
 
+/**
+ * @brief MtnLog boolean type
+ */
 #ifdef MTNLOG_NO_STDBOOL
     #define MTNLOG_BOOL int
 #else
